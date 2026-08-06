@@ -50,10 +50,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: clamp(32px, 4cqw, 64px);
+  /* Кегль меньше, чем был под знак «?»: инициалы из двух букв при 64px
+     упирались в края круга. */
+  font-size: clamp(24px, 3cqw, 44px);
   line-height: 1;
+  letter-spacing: 0.02em;
   background: var(--color-light-blue);
-  color: var(--color-blue-2);
+  color: var(--color-blue);
 }
 
 .speaker__body {
@@ -81,11 +84,10 @@
 
 .speaker__accent { color: var(--color-black); }
 
-/* Карточка второго спикера, пока данных нет: приглушена, чтобы её незаполненность
-   читалась как «скоро», а не как ошибка вёрстки. */
-.speaker--pending .speaker__name,
-.speaker--pending .speaker__lead,
-.speaker--pending .speaker__text { color: var(--color-gray-2); }
+/* ⚠️ Модификатор --pending теперь означает только «нет фотографии»: имя
+   и должность у спикера настоящие, поэтому приглушать их нельзя — иначе
+   человек читается как незаполненная заглушка. Правило приглушения снято
+   07.08.2026; сам класс оставлен как маркер «ждём фото». */
 
 /* ===== Программа вебинара ===== */
 .speakers__agenda {
