@@ -1,12 +1,13 @@
 /* year-path.css — программа подготовки: четыре навыка, которые формируются
-   за учебный год, врезка про маленькую группу и наглядное сравнение сроков
-   «9 месяцев против 6 недель».
+   за учебный год, и врезка про маленькую группу.
 
-   ⚠️ Дорожка с остановками по месяцам удалена (правка 06.08.2026). Две причины:
-   она описывала те же четыре навыка, что и карточки-опоры ниже — читатель видел
-   один список дважды и не понимал разницы; и она обещала календарный график
-   («в ноябре — внимание, в январе — самостоятельность»), которого нет в ТЗ
-   клиента и который школа не подтверждала. */
+   ⚠️ Из блока удалены две вещи (правки 06.08.2026):
+   1. Дорожка с остановками по месяцам — она описывала те же четыре навыка,
+      что и карточки-опоры (читатель видел один список дважды), и обещала
+      календарный график, которого нет в ТЗ клиента.
+   2. Сравнение сроков «9 месяцев против 6 недель» (полосы-бары) — убрано
+      по просьбе клиента. Мысль «год, а не месяц» осталась в заголовке блока
+      и в секции «Две крайности». */
 
 .year-path__head {
   display: flex;
@@ -18,56 +19,6 @@
 .year-path__title { line-height: 0.95; }
 
 .year-path__lead { max-width: 54cqw; }
-
-/* ===== Сравнение сроков ===== */
-/* Самостоятельный блок с заголовком. Раньше бары стояли молча в конце дорожки,
-   и было неясно, что это вообще сравнение. */
-.year-path__compare {
-  margin-top: clamp(24px, 2.5cqw, 44px);
-  padding: clamp(20px, 2.2cqw, 40px);
-  border-radius: var(--radius-card);
-  background: var(--color-surface);
-}
-
-.year-path__compare-title {
-  font-size: var(--fs-h4);
-  margin-bottom: clamp(16px, 1.6cqw, 26px);
-}
-
-.year-path__compare-rows {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.year-path__compare-row {
-  display: flex;
-  align-items: center;
-  gap: clamp(12px, 1.2cqw, 20px);
-  font-size: var(--fs-small);
-}
-
-/* Ширины баров — и есть вся суть блока: 9 месяцев против 6 недель.
-   6 недель ≈ 1,4 месяца, то есть примерно 15% от девяти. */
-.year-path__bar {
-  flex: none;
-  height: 14px;
-  border-radius: var(--radius-pill);
-}
-
-.year-path__bar--year {
-  width: min(62cqw, 100%);
-  background: var(--gradient-accent);
-}
-
-.year-path__bar--month {
-  width: min(9.5cqw, 100%);
-  background: var(--color-error);
-}
-
-.year-path__compare-row--month .year-path__compare-text { color: var(--color-error); }
-
-.year-path__compare-text strong { font-weight: 600; }
 
 /* ===== Опоры программы + врезка ===== */
 .year-path__bottom {
@@ -154,24 +105,8 @@
   .year-path__group-text { max-width: 62%; }
 }
 
-@media (max-width: 1024px) {
-  .year-path__bar--year { width: min(70cqw, 100%); }
-  .year-path__bar--month { width: min(11cqw, 100%); }
-}
-
 @media (max-width: 767px) {
   .year-path__pillars { grid-template-columns: minmax(0, 1fr); }
-
-  .year-path__compare-row {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  /* В столбик бары считаем от ширины экрана, иначе «месяц» становится
-     невидимой точкой и метафора пропадает. */
-  .year-path__bar--year { width: 100%; }
-  .year-path__bar--month { width: 16%; }
 
   .year-path__group-text {
     max-width: 100%;

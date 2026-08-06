@@ -106,28 +106,27 @@
    в правой колонке, а текст остаётся читаемым. */
 .hook__item--cross {
   display: flex;
-  align-items: flex-start;
+  /* Текст по центру относительно крестика — так же, как в списке с галочками */
+  align-items: center;
   gap: 12px;
   color: var(--color-gray-1);
 }
 
+/* Красный крестик: «это не то, что решает» читается сразу, без чтения текста */
 .hook__item--cross svg {
   flex: none;
-  margin-top: 1px;
-  color: var(--color-gray-2);
+  color: var(--color-error);
 }
 
 .hook__item--check {
   display: flex;
-  align-items: flex-start;
+  /* Текст по центру относительно галочки — парно списку с крестиками */
+  align-items: center;
   gap: 12px;
   color: var(--color-black);
 }
 
-.hook__item--check img {
-  flex: none;
-  margin-top: 2px;
-}
+.hook__item--check img { flex: none; }
 
 .hook__col-note {
   margin-top: auto;
