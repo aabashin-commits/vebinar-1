@@ -1,0 +1,191 @@
+/* first-class.css — синяя секция «что ждёт в 1 классе»: бенто-сетка фактов
+   о программе + режим дня цветными плашками (те же токены --chip-*, что
+   у расписания на сайте школы). Работает как доказательство: показываем,
+   куда именно ведёт годовая подготовка. */
+
+.first-class__card {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Декор сетки и волны — те же файлы, что в баннере «Приходите познакомиться» */
+.first-class__decor {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: clamp(200px, 26cqw, 480px);
+  height: auto;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.first-class__decor--wave {
+  top: auto;
+  right: auto;
+  bottom: -6cqw;
+  left: -6cqw;
+  width: clamp(240px, 34cqw, 620px);
+  opacity: 0.22;
+}
+
+.first-class__head {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 62cqw;
+}
+
+.first-class__title {
+  line-height: 0.95;
+  color: var(--color-white);
+}
+
+.first-class__lead { max-width: 54cqw; }
+
+/* ===== Бенто ===== */
+.first-class__grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--gap-cards);
+  margin-top: clamp(24px, 2.5cqw, 48px);
+}
+
+.first-class__card-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: clamp(18px, 1.8cqw, 32px);
+  border-radius: var(--radius-card);
+  /* Полупрозрачная плашка поверх градиента: не сплошной цвет, чтобы
+     градиент секции продолжал читаться сквозь карточки. */
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.first-class__card-item--wide { grid-column: span 2; }
+
+/* Крупная цифра «5» — единственный числовой акцент секции */
+.first-class__num {
+  font-size: clamp(48px, 5cqw, 96px);
+  line-height: 0.85;
+  font-weight: 600;
+  color: var(--color-white);
+}
+
+.first-class__item-title {
+  font-size: var(--fs-h4);
+  line-height: 1.15;
+  color: var(--color-white);
+}
+
+.first-class__item-text {
+  font-size: var(--fs-small);
+  line-height: 1.45;
+  color: var(--color-light-blue);
+}
+
+/* ===== Режим дня ===== */
+.first-class__day {
+  position: relative;
+  margin-top: clamp(24px, 2.5cqw, 48px);
+  padding: clamp(20px, 2.2cqw, 40px);
+  border-radius: var(--radius-card);
+  background: var(--color-white);
+  color: var(--color-black);
+}
+
+.first-class__day-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: clamp(16px, 1.6cqw, 28px);
+}
+
+.first-class__day-title { font-size: var(--fs-h4); }
+
+.first-class__day-note {
+  max-width: 52cqw;
+  font-size: var(--fs-small);
+  line-height: 1.45;
+  color: var(--color-gray-1);
+}
+
+.first-class__timeline {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--gap-cards);
+}
+
+/* Плашки распорядка — палитра --chip-* из base.css. Цвет к «предмету»
+   не привязан, это декор (то же правило, что у расписания школы). */
+.first-class__slot {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: clamp(14px, 1.4cqw, 24px);
+  border-radius: var(--radius-btn);
+}
+
+.first-class__slot--blue   { background: var(--chip-blue-bg);   color: var(--chip-blue-fg); }
+.first-class__slot--peach  { background: var(--chip-peach-bg);  color: var(--chip-peach-fg); }
+.first-class__slot--green  { background: var(--chip-green-bg);  color: var(--chip-green-fg); }
+.first-class__slot--purple { background: var(--chip-purple-bg); color: var(--chip-purple-fg); }
+
+.first-class__time {
+  font-size: var(--fs-btn);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.first-class__act {
+  font-size: var(--fs-small);
+  line-height: 1.35;
+}
+
+.first-class__clubs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: clamp(16px, 1.6cqw, 28px);
+}
+
+.first-class__clubs-label {
+  font-size: var(--fs-small);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-gray-2);
+}
+
+.first-class__club {
+  font-size: var(--fs-small);
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-light-blue);
+  color: var(--color-blue-chip);
+}
+
+@media (max-width: 1280px) {
+  .first-class__head,
+  .first-class__lead,
+  .first-class__day-note { max-width: none; }
+
+  .first-class__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  .first-class__timeline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 767px) {
+  .first-class__grid { grid-template-columns: minmax(0, 1fr); }
+
+  /* На одной колонке «широкие» карточки ничем не отличаются от обычных */
+  .first-class__card-item--wide { grid-column: auto; }
+
+  .first-class__timeline { grid-template-columns: minmax(0, 1fr); }
+
+  .first-class__decor { width: 60vw; }
+  .first-class__decor--wave { width: 80vw; }
+}

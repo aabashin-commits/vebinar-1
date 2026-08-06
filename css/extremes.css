@@ -1,0 +1,139 @@
+/* extremes.css — «качели»: две крайности родителей по краям, пилла
+   «а нужно — посередине» между ними. Карточки слегка наклонены в разные
+   стороны — отсюда и читается метафора весов, которые не в равновесии. */
+
+.extremes__head {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: clamp(24px, 2.5cqw, 48px);
+  text-align: center;
+  align-items: center;
+}
+
+.extremes__title { line-height: 0.95; }
+
+.extremes__grid {
+  display: grid;
+  /* Средняя колонка узкая — только под пиллу; карточки делят остаток поровну */
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--gap-cards);
+}
+
+.extremes__card {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 1.2cqw, 20px);
+  padding: clamp(24px, 2.5cqw, 48px);
+  border-radius: var(--radius-card);
+  background: var(--color-white);
+  box-shadow: var(--shadow-card);
+  transition: transform 0.3s ease;
+}
+
+/* Наклон в разные стороны. Небольшой — 1.2°: больше уже читается как
+   «съехала вёрстка», а не как приём. */
+.extremes__card--early { transform: rotate(-1.2deg); }
+.extremes__card--late  { transform: rotate(1.2deg); }
+
+/* На ховере карточка выравнивается — «весы приходят в равновесие» */
+.extremes__card:hover { transform: rotate(0); }
+
+.extremes__label {
+  align-self: flex-start;
+  font-size: var(--fs-small);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-gray-2);
+}
+
+.extremes__card-title { line-height: 1; }
+
+.extremes__text {
+  font-size: var(--fs-text);
+  line-height: 1.5;
+  color: var(--color-gray-1);
+}
+
+/* Итог крайности — отбит линией сверху, чтобы читался как вывод, а не
+   как продолжение абзаца. */
+.extremes__result {
+  margin-top: auto;
+  padding-top: clamp(14px, 1.4cqw, 22px);
+  border-top: 1px solid var(--color-gray-3);
+  font-size: var(--fs-text);
+  line-height: 1.4;
+}
+
+.extremes__result-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: var(--fs-small);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-error);
+}
+
+/* Пилла между карточками. Своя вертикальная линия сверху и снизу —
+   она и делает из двух карточек «коромысло». */
+.extremes__middle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding-inline: clamp(4px, 0.8cqw, 16px);
+}
+
+.extremes__middle::before,
+.extremes__middle::after {
+  content: '';
+  width: 1px;
+  height: clamp(20px, 4cqw, 70px);
+  background: linear-gradient(var(--color-light-blue), transparent);
+}
+
+.extremes__middle::after { background: linear-gradient(transparent, var(--color-light-blue)); }
+
+.extremes__middle-pill {
+  text-align: center;
+  white-space: normal;
+  max-width: 12ch;
+  line-height: 1.2;
+}
+
+.extremes__outcome {
+  margin-top: clamp(24px, 2.5cqw, 48px);
+  text-align: center;
+  font-size: var(--fs-h4);
+  line-height: 1.35;
+}
+
+@media (max-width: 1024px) {
+  /* Качели складываются в столбик: пилла становится разделителем между
+     карточками, её вертикальные «нити» продолжают работать. */
+  .extremes__grid { grid-template-columns: minmax(0, 1fr); }
+
+  .extremes__card--early,
+  .extremes__card--late { transform: none; }
+
+  .extremes__middle { flex-direction: row; }
+
+  .extremes__middle::before,
+  .extremes__middle::after {
+    width: clamp(20px, 8vw, 80px);
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-light-blue));
+  }
+
+  .extremes__middle::after { background: linear-gradient(90deg, var(--color-light-blue), transparent); }
+
+  .extremes__middle-pill { max-width: none; }
+}
+
+@media (max-width: 767px) {
+  .extremes__outcome { font-size: var(--fs-text); }
+}

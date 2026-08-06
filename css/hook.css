@@ -1,0 +1,164 @@
+/* hook.css — крючок вебинара: крупная цитата + сравнение «чему учат
+   на подготовке» против «что такое настоящая готовность».
+   Левая колонка перечёркнута — это главный визуальный приём блока:
+   родитель за секунду видит, что привычный чек-лист не работает. */
+
+.hook__card {
+  position: relative;
+  /* Декор-вихрь уходит за край карточки */
+  overflow: hidden;
+}
+
+/* Вихрь из блока FAQ школы — тот же файл, тот же приём: крупное светлое
+   пятно в углу, чтобы белая карточка не читалась плоской. */
+.hook__decor {
+  position: absolute;
+  top: -30cqw;
+  right: -20cqw;
+  width: 80cqw;
+  height: auto;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.hook__quote {
+  position: relative;
+  max-width: 62cqw;
+}
+
+/* Открывающая кавычка-«ёлочка» крупным планом слева от цитаты.
+   Не текстом в разметке: это декор, скринридеру он не нужен. */
+.hook__quote::before {
+  content: '«';
+  position: absolute;
+  top: -0.35em;
+  left: -0.55em;
+  font-size: clamp(80px, 9cqw, 180px);
+  line-height: 1;
+  color: var(--color-light-blue);
+  pointer-events: none;
+}
+
+.hook__quote-text {
+  position: relative;
+  font-size: var(--fs-h3);
+  line-height: 1.2;
+}
+
+.hook__after {
+  position: relative;
+  max-width: 56cqw;
+  margin-top: clamp(20px, 2cqw, 36px);
+  font-size: var(--fs-h4);
+  line-height: 1.35;
+  color: var(--color-gray-1);
+}
+
+/* ===== Сравнение ===== */
+.hook__compare {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap-cards);
+  margin-top: clamp(30px, 3.5cqw, 60px);
+}
+
+.hook__col {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 1.6cqw, 24px);
+  padding: clamp(20px, 2.2cqw, 40px);
+  border-radius: var(--radius-card);
+}
+
+/* Левая — приглушённая: это «то, что не работает» */
+.hook__col--old {
+  background: var(--color-surface);
+  color: var(--color-gray-2);
+}
+
+.hook__col--new {
+  background: var(--color-light-blue);
+}
+
+.hook__col-title {
+  font-size: var(--fs-h4);
+  line-height: 1.2;
+}
+
+.hook__col--old .hook__col-title { color: var(--color-gray-1); }
+
+.hook__list {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 1cqw, 16px);
+}
+
+.hook__item {
+  font-size: var(--fs-text);
+  line-height: 1.4;
+}
+
+/* Перечёркивание — не line-through у всего li (он зацепил бы и галочки),
+   а собственная линия: так толщина и цвет управляемы. */
+.hook__list--strike .hook__item {
+  position: relative;
+  align-self: flex-start;
+  padding-right: 4px;
+}
+
+.hook__list--strike .hook__item::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 2px;
+  background: var(--color-error);
+  border-radius: 2px;
+}
+
+.hook__item--check {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: var(--color-black);
+}
+
+.hook__item--check img {
+  flex: none;
+  margin-top: 2px;
+}
+
+.hook__col-note {
+  margin-top: auto;
+  font-size: var(--fs-small);
+  line-height: 1.4;
+}
+
+.hook__col--new .hook__col-note { color: var(--color-blue-chip); }
+
+@media (max-width: 1024px) {
+  .hook__quote,
+  .hook__after { max-width: none; }
+
+  .hook__decor {
+    top: -40cqw;
+    width: 110cqw;
+  }
+}
+
+@media (max-width: 767px) {
+  .hook__quote::before {
+    /* На узком экране крупная кавычка съедала первую строку цитаты */
+    font-size: 64px;
+    top: -0.25em;
+    left: -0.15em;
+  }
+
+  .hook__quote-text { font-size: var(--fs-h4); }
+
+  .hook__after { font-size: var(--fs-text); }
+
+  .hook__compare { grid-template-columns: minmax(0, 1fr); }
+}

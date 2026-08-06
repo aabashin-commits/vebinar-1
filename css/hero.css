@@ -1,0 +1,213 @@
+/* hero.css — первый экран: синяя панель на фирменном градиенте, крупный H1,
+   мета-строка эфира, обратный отсчёт, CTA со стикером и вырезка ребёнка справа.
+   Композиция повторяет hero сайта школы: панель со скруглением внутри
+   .container, текст слева, вырезка без фона прижата к правому нижнему углу. */
+
+.hero__panel {
+  position: relative;
+  display: grid;
+  /* Текст держит читаемую ширину, картинка забирает остаток. minmax(0,…)
+     обязателен: без него длинные слова в тексте распирают колонку. */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.72fr);
+  align-items: end;
+  gap: var(--gap-cards);
+  min-height: clamp(520px, 40cqw, 790px);
+  padding: var(--hero-pad);
+  border-radius: var(--radius-card);
+  background: var(--gradient-accent);
+  color: var(--color-white);
+  /* Вырезка намеренно уходит за нижний край панели — обрезаем по скруглению */
+  overflow: hidden;
+}
+
+.hero__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(16px, 1.6cqw, 28px);
+  /* Панель выровнена по низу (align-items: end) ради картинки; текст же должен
+     стоять сверху, иначе при высокой вырезке он уезжает вниз. */
+  align-self: start;
+  max-width: 62cqw;
+}
+
+.hero__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.hero__title {
+  /* Заголовок берёт --fs-h1 из base.css; здесь только цвет и запрет
+     автопереносов — переносы расставлены вручную <br> по композиции. */
+  color: var(--color-white);
+}
+
+/* line-height с запасом под подсветку .hl: с плотной строкой розовая плашка
+   «за год» почти касалась строки ниже. */
+.hero__subtitle {
+  font-size: var(--fs-h3);
+  line-height: 1.25;
+  color: var(--color-light-blue);
+}
+
+.hero__desc {
+  font-size: var(--fs-text);
+  line-height: 1.5;
+  max-width: 46cqw;
+  color: var(--color-light-blue);
+}
+
+.hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(12px, 1.2cqw, 24px);
+  font-size: var(--fs-small);
+}
+
+.hero__meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-white);
+}
+
+.hero__meta-item svg {
+  flex: none;
+  color: var(--color-blue-2);
+}
+
+/* ===== Таймер ===== */
+.hero__timer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.hero__timer-title {
+  font-size: var(--fs-small);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-light-blue);
+}
+
+/* ===== CTA ===== */
+.hero__cta {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 1.2cqw, 20px);
+  flex-wrap: wrap;
+}
+
+/* Искорки — тот же декор, что у CTA школы: маленький «блик» у угла кнопки */
+.hero__spark {
+  position: absolute;
+  top: -14px;
+  left: -12px;
+  width: clamp(16px, 1.2cqw, 20px);
+  height: auto;
+  pointer-events: none;
+}
+
+.hero__sticker {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--fs-small);
+  padding: clamp(10px, 1vw, 14px) clamp(18px, 1.6vw, 24px);
+  border-radius: var(--radius-pill);
+  background: var(--color-white);
+  color: var(--color-pink);
+  white-space: nowrap;
+}
+
+.hero__spark--sticker {
+  position: absolute;
+  top: -12px;
+  right: -10px;
+  left: auto;
+  width: clamp(20px, 1.5cqw, 27px);
+}
+
+/* ===== Вырезка ребёнка ===== */
+.hero__media {
+  position: relative;
+  align-self: end;
+  justify-self: end;
+  /* Отрицательное поле снизу и справа: вырезка «выходит» за поле панели,
+     как дети в hero школы. Считаем в cqw, чтобы вылет ехал вместе с шириной. */
+  margin-block-end: calc(var(--hero-pad) * -1);
+  margin-inline-end: calc(var(--hero-pad) * -0.5);
+}
+
+.hero__kid {
+  width: 100%;
+  max-width: clamp(260px, 30cqw, 560px);
+  height: auto;
+  /* Мягкая тень под вырезкой, чтобы она не «висела» на градиенте */
+  filter: drop-shadow(0 18px 40px rgba(11, 24, 84, 0.35));
+}
+
+/* ===== Адаптив ===== */
+
+/* До 1024 картинка ещё помещается рядом, но текстовая колонка уже должна
+   занимать почти всю ширину — иначе строки рвутся по два слова. */
+@media (max-width: 1280px) {
+  .hero__content { max-width: 70cqw; }
+  .hero__desc { max-width: 56cqw; }
+}
+
+@media (max-width: 1024px) {
+  .hero__panel {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+  }
+
+  .hero__content {
+    max-width: none;
+    gap: 20px;
+  }
+
+  .hero__desc { max-width: 100%; }
+
+  /* Вырезка уходит в фон: перекрывать текст ей нельзя, а места на отдельную
+     колонку уже нет. Прижата к правому нижнему углу и приглушена. */
+  .hero__media {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    opacity: 0.28;
+    pointer-events: none;
+  }
+
+  .hero__kid { max-width: min(46vw, 380px); }
+}
+
+@media (max-width: 767px) {
+  .hero__panel { padding: var(--hero-pad) 20px 30px; }
+
+  .hero__subtitle { font-size: var(--fs-h4); }
+
+  .hero__meta {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .hero__cta {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  /* Стикер под кнопкой во всю ширину — кнопка на телефоне тоже растянута */
+  .hero__sticker { justify-content: center; }
+
+  .hero__spark { display: none; }
+
+  /* На телефоне вырезка мешает даже приглушённой: текста много, он идёт
+     в одну колонку и заходит на неё. */
+  .hero__media { display: none; }
+}

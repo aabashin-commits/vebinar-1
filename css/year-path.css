@@ -1,0 +1,260 @@
+/* year-path.css — центральная метафора лендинга: «год против месяца».
+   Горизонтальная дорожка с остановками по месяцам, под ней — два бара
+   в масштабе (9 месяцев против 6 недель), затем четыре опоры программы
+   и врезка про маленькую группу. */
+
+.year-path__head {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 62cqw;
+}
+
+.year-path__title { line-height: 0.95; }
+
+.year-path__lead { max-width: 54cqw; }
+
+/* ===== Дорожка ===== */
+.year-path__track {
+  margin-top: clamp(30px, 3.5cqw, 60px);
+  padding: clamp(20px, 2.2cqw, 40px);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+}
+
+.year-path__track-title {
+  font-size: var(--fs-small);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-blue);
+  margin-bottom: clamp(20px, 2cqw, 32px);
+}
+
+.year-path__steps {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: clamp(8px, 1cqw, 20px);
+}
+
+/* Линия дорожки — одна на всю сетку, проходит через точки остановок.
+   Позиция по вертикали совпадает с центром .year-path__dot (см. ниже). */
+.year-path__steps::before {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-light-blue), var(--color-blue));
+}
+
+.year-path__step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 24px;
+}
+
+.year-path__dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: var(--radius-pill);
+  background: var(--color-white);
+  border: 2px solid var(--color-blue-2);
+}
+
+/* Финальная остановка выделена: это цель всего года */
+.year-path__step--final .year-path__dot {
+  background: var(--color-pink);
+  border-color: var(--color-pink);
+  /* Кольцо вокруг точки — акцент без увеличения самой точки,
+     иначе она сдвинула бы линию. */
+  box-shadow: 0 0 0 4px rgba(255, 42, 127, 0.2);
+}
+
+.year-path__month {
+  font-size: var(--fs-btn);
+  color: var(--color-blue);
+}
+
+.year-path__step--final .year-path__month { color: var(--color-pink); }
+
+.year-path__skill {
+  font-size: var(--fs-small);
+  line-height: 1.35;
+  color: var(--color-gray-1);
+}
+
+.year-path__step--final .year-path__skill { color: var(--color-black); }
+
+/* ===== Бары «год против месяца» ===== */
+.year-path__compare {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: clamp(24px, 2.5cqw, 44px);
+  padding-top: clamp(20px, 2cqw, 32px);
+  border-top: 1px solid var(--color-gray-3);
+}
+
+.year-path__compare-row {
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 1.2cqw, 20px);
+  font-size: var(--fs-small);
+}
+
+/* Ширины баров — и есть вся суть блока: 9 месяцев против 6 недель.
+   6 недель ≈ 1,4 месяца, то есть примерно 15% от девяти. */
+.year-path__bar {
+  flex: none;
+  height: 14px;
+  border-radius: var(--radius-pill);
+}
+
+.year-path__bar--year {
+  width: min(62cqw, 100%);
+  background: var(--gradient-accent);
+}
+
+.year-path__bar--month {
+  width: min(9.5cqw, 100%);
+  background: var(--color-error);
+}
+
+.year-path__compare-row--month .year-path__compare-text { color: var(--color-error); }
+
+.year-path__compare-text strong { font-weight: 600; }
+
+/* ===== Опоры программы + врезка ===== */
+.year-path__bottom {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.42fr);
+  gap: var(--gap-cards);
+  margin-top: clamp(24px, 2.5cqw, 44px);
+}
+
+.year-path__pillars {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap-cards);
+}
+
+.year-path__pillar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: clamp(18px, 1.8cqw, 30px);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--color-light-blue);
+}
+
+.year-path__pillar-title {
+  font-size: var(--fs-h4);
+  line-height: 1.1;
+  color: var(--color-blue);
+}
+
+.year-path__pillar-text {
+  font-size: var(--fs-small);
+  line-height: 1.45;
+  color: var(--color-gray-1);
+}
+
+/* Врезка про маленькую группу — синяя, чтобы читалась как акцент,
+   а не как пятая опора. */
+.year-path__group {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: clamp(20px, 2.2cqw, 40px);
+  border-radius: var(--radius-card);
+  background: var(--gradient-accent);
+  color: var(--color-white);
+  overflow: hidden;
+}
+
+/* Мальчик из блока «нет домашних заданий» школы — узкий кроп «голова
+   и плечи», поэтому прижат к правому нижнему углу и подрезан скруглением. */
+.year-path__boy {
+  position: absolute;
+  right: calc(var(--card-pad) * -0.4);
+  bottom: 0;
+  width: clamp(140px, 16cqw, 240px);
+  height: auto;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.year-path__group-title { font-size: var(--fs-h4); }
+
+.year-path__group-text {
+  font-size: var(--fs-small);
+  line-height: 1.5;
+  color: var(--color-light-blue);
+  /* Оставляем место под картинку в углу */
+  max-width: 78%;
+  /* Отбивка снизу, чтобы текст не наезжал на мальчика */
+  padding-bottom: clamp(40px, 6cqw, 90px);
+}
+
+@media (max-width: 1280px) {
+  .year-path__head,
+  .year-path__lead { max-width: none; }
+
+  .year-path__bottom { grid-template-columns: minmax(0, 1fr); }
+
+  .year-path__group-text { max-width: 62%; }
+}
+
+@media (max-width: 1024px) {
+  /* Дорожка встаёт вертикально: шесть колонок на планшете дают по два
+     слова в строке. Линия переезжает из горизонтали в вертикаль. */
+  .year-path__steps { grid-template-columns: minmax(0, 1fr); }
+
+  .year-path__steps::before {
+    top: 5px;
+    bottom: 5px;
+    left: 5px;
+    right: auto;
+    width: 2px;
+    height: auto;
+    background: linear-gradient(var(--color-light-blue), var(--color-blue));
+  }
+
+  .year-path__step {
+    padding-top: 0;
+    padding-left: 32px;
+  }
+
+  .year-path__bar--year { width: min(70cqw, 100%); }
+  .year-path__bar--month { width: min(11cqw, 100%); }
+}
+
+@media (max-width: 767px) {
+  .year-path__pillars { grid-template-columns: minmax(0, 1fr); }
+
+  .year-path__compare-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* В столбик бары считаем от ширины экрана, иначе «месяц» становится
+     невидимой точкой и метафора пропадает. */
+  .year-path__bar--year { width: 100%; }
+  .year-path__bar--month { width: 16%; }
+
+  .year-path__group-text {
+    max-width: 100%;
+    padding-bottom: clamp(60px, 24vw, 110px);
+  }
+
+  .year-path__boy { width: 150px; }
+}
