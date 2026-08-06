@@ -13,11 +13,14 @@
 
 .extremes__title { line-height: 0.95; }
 
+/* ⚠️ Две равные колонки, без средней под пиллу. Раньше стояло
+   `1fr auto 1fr`, и колонка чипсика съедала 157px: карточки становились уже,
+   а заголовки в них рвались на три короткие строки. Пилла переехала
+   отдельной строкой под карточки (.extremes__middle ниже). */
 .extremes__grid {
   display: grid;
-  /* Средняя колонка узкая — только под пиллу; карточки делят остаток поровну */
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  align-items: center;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
   gap: var(--gap-cards);
 }
 
@@ -51,7 +54,13 @@
   color: var(--color-gray-2);
 }
 
-.extremes__card-title { line-height: 1; }
+/* Переносы отдаём браузеру: ручные <br> были рассчитаны на узкую карточку
+   и на нынешней ширине рвали заголовок на три коротких строки.
+   balance выравнивает строки по длине, чтобы не было «хвоста» из одного слова. */
+.extremes__card-title {
+  line-height: 1.05;
+  text-wrap: balance;
+}
 
 .extremes__text {
   font-size: var(--fs-text);
@@ -78,32 +87,33 @@
   color: var(--color-error);
 }
 
-/* Пилла между карточками. Своя вертикальная линия сверху и снизу —
-   она и делает из двух карточек «коромысло». */
+/* Пилла-вывод под карточками, по центру, с горизонтальными «нитями» по бокам.
+   ⚠️ Раньше стояла в средней колонке грида шириной 157px: текст ложился
+   в три строки, а компонент .pill рассчитан на одну (радиус 999px + nowrap),
+   и «таблетка» с тремя строками выглядела сломанной. */
 .extremes__middle {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 12px;
-  padding-inline: clamp(4px, 0.8cqw, 16px);
+  justify-content: center;
+  gap: clamp(12px, 1.5cqw, 24px);
+  margin-top: clamp(20px, 2cqw, 36px);
 }
 
 .extremes__middle::before,
 .extremes__middle::after {
   content: '';
-  width: 1px;
-  height: clamp(20px, 4cqw, 70px);
-  background: linear-gradient(var(--color-light-blue), transparent);
+  /* Нити занимают свободное место по бокам, но не длиннее 220px:
+     на 1920 линия во всю ширину секции читалась бы как разделитель страницы. */
+  flex: 1 1 auto;
+  max-width: clamp(40px, 12cqw, 220px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-light-blue));
 }
 
-.extremes__middle::after { background: linear-gradient(transparent, var(--color-light-blue)); }
+.extremes__middle::after { background: linear-gradient(90deg, var(--color-light-blue), transparent); }
 
-.extremes__middle-pill {
-  text-align: center;
-  white-space: normal;
-  max-width: 12ch;
-  line-height: 1.2;
-}
+/* Одна строка — как и задумано у .pill; max-width и white-space не трогаем */
+.extremes__middle-pill { text-align: center; }
 
 .extremes__outcome {
   margin-top: clamp(24px, 2.5cqw, 48px);
@@ -113,27 +123,18 @@
 }
 
 @media (max-width: 1024px) {
-  /* Качели складываются в столбик: пилла становится разделителем между
-     карточками, её вертикальные «нити» продолжают работать. */
+  /* Качели складываются в столбик; наклон снимаем — в колонку он читался бы
+     как съехавшая вёрстка, а не как приём. Пилла и так уже под карточками. */
   .extremes__grid { grid-template-columns: minmax(0, 1fr); }
 
   .extremes__card--early,
   .extremes__card--late { transform: none; }
-
-  .extremes__middle { flex-direction: row; }
-
-  .extremes__middle::before,
-  .extremes__middle::after {
-    width: clamp(20px, 8vw, 80px);
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--color-light-blue));
-  }
-
-  .extremes__middle::after { background: linear-gradient(90deg, var(--color-light-blue), transparent); }
-
-  .extremes__middle-pill { max-width: none; }
 }
 
 @media (max-width: 767px) {
   .extremes__outcome { font-size: var(--fs-text); }
+
+  /* На 360 «а нужно — посередине» с нитями по бокам не помещается в строку */
+  .extremes__middle::before,
+  .extremes__middle::after { max-width: 40px; }
 }

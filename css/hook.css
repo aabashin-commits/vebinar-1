@@ -99,23 +99,22 @@
   line-height: 1.4;
 }
 
-/* Перечёркивание — не line-through у всего li (он зацепил бы и галочки),
-   а собственная линия: так толщина и цвет управляемы. */
-.hook__list--strike .hook__item {
-  position: relative;
-  align-self: flex-start;
-  padding-right: 4px;
+/* ⚠️ Зачёркивание убрано (правка 06.08.2026). Линия шла ровно по середине
+   строчных букв, а текст был --color-gray-2 (#939393) на фоне #F8F8F8 —
+   контраст 2.6:1 при норме 4.5:1. Вместе это делало пункты нечитаемыми.
+   Теперь смысл «это не то» несёт крестик слева — зеркально галочкам
+   в правой колонке, а текст остаётся читаемым. */
+.hook__item--cross {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: var(--color-gray-1);
 }
 
-.hook__list--strike .hook__item::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  height: 2px;
-  background: var(--color-error);
-  border-radius: 2px;
+.hook__item--cross svg {
+  flex: none;
+  margin-top: 1px;
+  color: var(--color-gray-2);
 }
 
 .hook__item--check {
@@ -134,6 +133,9 @@
   margin-top: auto;
   font-size: var(--fs-small);
   line-height: 1.4;
+  /* Явный цвет: от .hook__col--old прилетал --color-gray-2, на светлой
+     плашке подпись почти пропадала (та же причина, что у пунктов списка). */
+  color: var(--color-gray-1);
 }
 
 .hook__col--new .hook__col-note { color: var(--color-blue-chip); }

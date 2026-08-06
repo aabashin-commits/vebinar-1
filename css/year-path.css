@@ -1,7 +1,12 @@
-/* year-path.css — центральная метафора лендинга: «год против месяца».
-   Горизонтальная дорожка с остановками по месяцам, под ней — два бара
-   в масштабе (9 месяцев против 6 недель), затем четыре опоры программы
-   и врезка про маленькую группу. */
+/* year-path.css — программа подготовки: четыре навыка, которые формируются
+   за учебный год, врезка про маленькую группу и наглядное сравнение сроков
+   «9 месяцев против 6 недель».
+
+   ⚠️ Дорожка с остановками по месяцам удалена (правка 06.08.2026). Две причины:
+   она описывала те же четыре навыка, что и карточки-опоры ниже — читатель видел
+   один список дважды и не понимал разницы; и она обещала календарный график
+   («в ноябре — внимание, в январе — самостоятельность»), которого нет в ТЗ
+   клиента и который школа не подтверждала. */
 
 .year-path__head {
   display: flex;
@@ -14,92 +19,25 @@
 
 .year-path__lead { max-width: 54cqw; }
 
-/* ===== Дорожка ===== */
-.year-path__track {
-  margin-top: clamp(30px, 3.5cqw, 60px);
+/* ===== Сравнение сроков ===== */
+/* Самостоятельный блок с заголовком. Раньше бары стояли молча в конце дорожки,
+   и было неясно, что это вообще сравнение. */
+.year-path__compare {
+  margin-top: clamp(24px, 2.5cqw, 44px);
   padding: clamp(20px, 2.2cqw, 40px);
   border-radius: var(--radius-card);
   background: var(--color-surface);
 }
 
-.year-path__track-title {
-  font-size: var(--fs-small);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--color-blue);
-  margin-bottom: clamp(20px, 2cqw, 32px);
+.year-path__compare-title {
+  font-size: var(--fs-h4);
+  margin-bottom: clamp(16px, 1.6cqw, 26px);
 }
 
-.year-path__steps {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: clamp(8px, 1cqw, 20px);
-}
-
-/* Линия дорожки — одна на всю сетку, проходит через точки остановок.
-   Позиция по вертикали совпадает с центром .year-path__dot (см. ниже). */
-.year-path__steps::before {
-  content: '';
-  position: absolute;
-  top: 5px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--color-light-blue), var(--color-blue));
-}
-
-.year-path__step {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding-top: 24px;
-}
-
-.year-path__dot {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 12px;
-  height: 12px;
-  border-radius: var(--radius-pill);
-  background: var(--color-white);
-  border: 2px solid var(--color-blue-2);
-}
-
-/* Финальная остановка выделена: это цель всего года */
-.year-path__step--final .year-path__dot {
-  background: var(--color-pink);
-  border-color: var(--color-pink);
-  /* Кольцо вокруг точки — акцент без увеличения самой точки,
-     иначе она сдвинула бы линию. */
-  box-shadow: 0 0 0 4px rgba(255, 42, 127, 0.2);
-}
-
-.year-path__month {
-  font-size: var(--fs-btn);
-  color: var(--color-blue);
-}
-
-.year-path__step--final .year-path__month { color: var(--color-pink); }
-
-.year-path__skill {
-  font-size: var(--fs-small);
-  line-height: 1.35;
-  color: var(--color-gray-1);
-}
-
-.year-path__step--final .year-path__skill { color: var(--color-black); }
-
-/* ===== Бары «год против месяца» ===== */
-.year-path__compare {
+.year-path__compare-rows {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-top: clamp(24px, 2.5cqw, 44px);
-  padding-top: clamp(20px, 2cqw, 32px);
-  border-top: 1px solid var(--color-gray-3);
 }
 
 .year-path__compare-row {
@@ -180,8 +118,11 @@
   overflow: hidden;
 }
 
-/* Мальчик из блока «нет домашних заданий» школы — узкий кроп «голова
-   и плечи», поэтому прижат к правому нижнему углу и подрезан скруглением. */
+/* Мальчик из блока «нет домашних заданий» школы, прижат к правому нижнему углу.
+   ⚠️ Здесь ПОЛНЫЙ кадр 424×272 (в school это boy-mobile.webp), а не десктопный
+   кроп 424×220: у кропа макушка обрезана в самом файле. В school он стоит
+   `top: 0`, и срез уходит за верхнюю кромку карточки — там его не видно.
+   У нас картинка прижата к низу, и обрезанная голова оказывалась на виду. */
 .year-path__boy {
   position: absolute;
   right: calc(var(--card-pad) * -0.4);
@@ -214,25 +155,6 @@
 }
 
 @media (max-width: 1024px) {
-  /* Дорожка встаёт вертикально: шесть колонок на планшете дают по два
-     слова в строке. Линия переезжает из горизонтали в вертикаль. */
-  .year-path__steps { grid-template-columns: minmax(0, 1fr); }
-
-  .year-path__steps::before {
-    top: 5px;
-    bottom: 5px;
-    left: 5px;
-    right: auto;
-    width: 2px;
-    height: auto;
-    background: linear-gradient(var(--color-light-blue), var(--color-blue));
-  }
-
-  .year-path__step {
-    padding-top: 0;
-    padding-left: 32px;
-  }
-
   .year-path__bar--year { width: min(70cqw, 100%); }
   .year-path__bar--month { width: min(11cqw, 100%); }
 }

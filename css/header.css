@@ -67,6 +67,19 @@ html { scroll-padding-top: 88px; }
 
 .header__link:hover { color: var(--color-blue); }
 
+/* Телефон — как в school/css/header.css. Номер статичный: коллтрекинг Roistat
+   на лендинг не переносим (он подменяет номер своим), поэтому здесь просто
+   ссылка tel:. Меняется номер — правится и в бургер-меню (.header__menu-phone),
+   и в финальном CTA (.final-cta__phone), и в футере. */
+.header__phone {
+  flex: none;
+  font-size: var(--fs-btn);
+  white-space: nowrap;
+  transition: color 0.25s ease;
+}
+
+.header__phone:hover { color: var(--color-blue); }
+
 .header__cta { flex: none; }
 
 .header__burger {
@@ -138,6 +151,7 @@ html { scroll-padding-top: 88px; }
   .header__inner { height: 64px; }
 
   .header__nav,
+  .header__phone,
   .header__cta { display: none; }
 
   .header__date { margin-right: auto; }
